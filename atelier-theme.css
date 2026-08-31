@@ -1,0 +1,176 @@
+/*
+  Atelier theme — glassmorphism (black & white)
+
+  All visual tokens live on the `.atelier-theme` root as custom properties
+  (variables prefixed with `--atl-...`). To restyle or re-skin the theme,
+  override those variables on the `.atelier-theme` element (for example by
+  adding an inline style to the container or redefining the class in another
+  stylesheet). This file contains only class-based selectors scoped under
+  `.atelier-theme` and is safe to drop into any existing project.
+*/
+
+.atelier-theme{
+  --atl-void: #0A0A0B;
+  --atl-onyx: #131315;
+  --atl-charcoal: #1C1C1F;
+  --atl-hairline: rgba(255,255,255,0.08);
+  --atl-hairline-strong: rgba(255,255,255,0.14);
+  --atl-porcelain: #F5F4F2;
+  --atl-smoke: #A8A8AE;
+  --atl-dim: #6E6E74;
+  --atl-glass: rgba(255,255,255,0.045);
+  --atl-glass-strong: rgba(255,255,255,0.075);
+  --atl-blur: 20px;
+  --atl-radius-lg: 16px;
+  --atl-radius-md: 10px;
+  --atl-radius-sm: 8px;
+  --atl-gap: 14px;
+  --atl-padding: 18px;
+  --atl-font-display: "Fraunces", serif;
+  --atl-font-body: "Inter", sans-serif;
+  --atl-font-mono: "IBM Plex Mono", monospace;
+}
+
+/* apply base dark canvas inside the theme container so the UI is always black */
+.atelier-theme{
+  background: var(--atl-void);
+  color: var(--atl-porcelain);
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding: 28px;
+  font-family: var(--atl-font-body);
+}
+
+/* Toasts scoped to the theme */
+.atelier-theme .toast-container{position:fixed;right:16px;bottom:16px;z-index:9999;display:flex;flex-direction:column;gap:8px}
+.atelier-theme .toast{background:var(--atl-glass);padding:10px 14px;border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,0.08);min-width:180px;color:var(--atl-porcelain);border:1px solid var(--atl-hairline)}
+.atelier-theme .toast.success{border-left:4px solid rgba(255,255,255,0.12)}
+.atelier-theme .toast.error{border-left:4px solid rgba(255,255,255,0.06)}
+
+/* helper layout token inside namespace */
+.atelier-theme .atl-container{box-sizing:border-box; width:100%; min-width:0}
+.atelier-theme .atl-dashboard-shell{max-width:1180px;margin:32px auto;display:grid;grid-template-columns:240px minmax(0,1fr);gap:28px;width:100%;min-width:0}
+.atelier-theme .atl-main{min-width:0; width:100%}
+.atelier-theme .atl-schedule-grid{display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-top:14px;min-width:0}
+.atelier-theme .atl-lower-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:14px;min-width:0}
+
+/* subtle studio glow — purely decorative */
+.atelier-theme .atl-glow{
+  position:absolute;left:6%;top:6%;width:480px;height:480px;border-radius:50%;
+  pointer-events:none;z-index:0;filter:blur(40px);
+  background:radial-gradient(closest-side, rgba(255,255,255,0.10), rgba(255,255,255,0.02) 36%, transparent 60%);
+}
+
+/* SIDEBAR */
+.atelier-theme .atl-sidebar{
+  background:var(--atl-glass);
+  border:1px solid var(--atl-hairline);
+  border-radius:calc(var(--atl-radius-lg));
+  padding:var(--atl-padding);
+  -webkit-backdrop-filter: blur(var(--atl-blur));
+  backdrop-filter: blur(var(--atl-blur));
+  box-sizing:border-box;
+}
+
+.atelier-theme .atl-brand{
+  font-family:var(--atl-font-display);
+  font-style:italic;
+  font-weight:300;
+  font-size:1.5rem;
+  color:var(--atl-porcelain);
+}
+
+.atelier-theme .atl-nav{padding:0;margin:var(--atl-gap) 0 0 0;list-style:none;display:flex;flex-direction:column;gap:8px}
+.atelier-theme .atl-nav-item{
+  display:flex;align-items:center;gap:10px;padding:10px;border-radius:12px;
+  color:var(--atl-porcelain);font-family:var(--atl-font-body);font-weight:600;font-size:0.95rem;
+  border:1px solid transparent;cursor:pointer;
+}
+.atelier-theme .atl-nav-item a{display:flex;align-items:center;gap:10px;width:100%;color:var(--atl-porcelain);text-decoration:none}
+.atelier-theme .atl-nav-item .atl-dot{width:9px;height:9px;border-radius:50%;background:var(--atl-charcoal);border:1px solid var(--atl-hairline-strong);flex:0 0 9px}
+.atelier-theme .atl-nav-item.is-active{
+  background:var(--atl-glass-strong);border:1px solid var(--atl-hairline-strong);
+}
+
+.atelier-theme .atl-sidebar-footer{display:flex;align-items:center;gap:12px;margin-top:18px;border-top:1px dashed rgba(255,255,255,0.02);padding-top:12px}
+.atelier-theme .atl-avatar{display:inline-grid;place-items:center;border-radius:50%;background:var(--atl-charcoal);color:var(--atl-porcelain);border:1px solid var(--atl-hairline-strong);font-family:var(--atl-font-mono);font-weight:600}
+.atelier-theme .atl-avatar--sm{width:38px;height:38px;font-size:0.9rem}
+.atelier-theme .atl-avatar--md{width:44px;height:44px;font-size:1rem}
+
+/* TOPBAR */
+.atelier-theme .atl-topbar{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.atelier-theme .atl-greeting{font-family:var(--atl-font-display);font-style:italic;color:var(--atl-porcelain);font-weight:300;font-size:1.4rem}
+.atelier-theme .atl-sub{color:var(--atl-smoke);font-family:var(--atl-font-body);font-weight:500;font-size:0.95rem}
+
+.atelier-theme .atl-search{
+  display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:14px;
+  background:var(--atl-glass);border:1px solid var(--atl-hairline);
+  -webkit-backdrop-filter: blur(var(--atl-blur));backdrop-filter: blur(var(--atl-blur));
+}
+.atelier-theme .atl-search input{background:transparent;border:0;outline:0;color:var(--atl-porcelain);font-family:var(--atl-font-body);font-size:0.95rem}
+
+/* KPI grid */
+.atelier-theme .atl-kpi-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));gap:14px;align-items:stretch;margin-top:12px;width:100%;min-width:0}
+.atelier-theme .atl-kpi{padding:12px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border:1px solid var(--atl-hairline);-webkit-backdrop-filter: blur(var(--atl-blur));backdrop-filter: blur(var(--atl-blur));display:flex;flex-direction:column;justify-content:space-between;aspect-ratio:1/1;min-height:150px;width:100%;min-width:0;box-sizing:border-box}
+.atelier-theme .atl-frame{aspect-ratio:1/1;border-radius:10px;border:1px solid var(--atl-hairline);background:linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));display:flex;align-items:flex-end;padding:10px;color:var(--atl-dim);font-weight:700}
+
+/* responsive: collapse columns under 900px but scoped to container */
+@media (min-width:768px) and (max-width:1024px){
+  .atelier-theme{padding:18px}
+  .atelier-theme .atl-dashboard-shell{grid-template-columns:190px minmax(0,1fr);gap:18px;max-width:980px}
+  .atelier-theme .atl-nav-list{gap:6px}
+  .atelier-theme .atl-topbar{align-items:flex-end}
+  .atelier-theme .atl-search{width:min(270px,100%)}
+  .atelier-theme .atl-search input{width:100%}
+  .atelier-theme .atl-kpi-grid{display:grid;grid-template-columns:repeat(2, minmax(0, 1fr));gap:12px;margin-top:12px}
+  .atelier-theme .atl-kpi{min-width:0}
+  .atelier-theme .atl-schedule-grid{grid-template-columns:1.5fr 1fr}
+  .atelier-theme .atl-lower-grid{grid-template-columns:1fr 1fr}
+  .atelier-theme .atl-portfolio-grid{grid-template-columns:repeat(3,1fr)}
+  .atelier-theme .atl-appt{gap:10px}
+  .atelier-theme .atl-panel{padding:14px}
+}
+
+@media (max-width:1180px){
+  .atelier-theme{padding:20px}
+  .atelier-theme .atl-dashboard-shell{grid-template-columns:210px minmax(0,1fr);gap:20px}
+}
+
+@media (max-width:900px){
+  .atelier-theme .atl-dashboard-shell{grid-template-columns:1fr;max-width:100%}
+  .atelier-theme .atl-sidebar{padding:16px}
+  .atelier-theme .atl-nav-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .atelier-theme .atl-topbar{flex-direction:column;align-items:flex-start}
+  .atelier-theme .atl-search{width:100%}
+  .atelier-theme .atl-search input{width:100%}
+  .atelier-theme .atl-schedule-grid,
+  .atelier-theme .atl-lower-grid{grid-template-columns:1fr}
+  .atelier-theme .atl-kpi-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--atl-gap)}
+  .atelier-theme .atl-kpi{min-width:0}
+  .atelier-theme .atl-portfolio-grid{grid-template-columns:repeat(3,1fr)}
+}
+
+@media (max-width:768px){
+  .atelier-theme{padding:16px}
+  .atelier-theme .atl-dashboard-shell{margin:18px auto;gap:16px}
+  .atelier-theme .atl-nav-list{grid-template-columns:1fr 1fr}
+  .atelier-theme .atl-greeting{font-size:1.2rem}
+  .atelier-theme .atl-kpi-grid{grid-template-columns:1fr 1fr}
+  .atelier-theme .atl-chart{height:110px}
+  .atelier-theme .atl-portfolio-grid{grid-template-columns:repeat(2,1fr)}
+  .atelier-theme .atl-appt{flex-wrap:wrap}
+}
+
+@media (max-width:520px){
+  .atelier-theme .atl-kpi-grid{grid-template-columns:1fr;overflow-x:hidden}
+  .atelier-theme .atl-portfolio-grid{grid-template-columns:repeat(2,1fr)}
+  .atelier-theme .atl-chart{height:100px}
+  .atelier-theme .atl-panel{padding:12px;border-radius:12px}
+}
+
+/* small utilities inside namespace */
+.atelier-theme .atl-muted{color:var(--atl-smoke)}
+.atelier-theme .atl-caption{color:var(--atl-dim);font-size:0.9rem}
+
+/* utility: disable page scroll while interacting with scrollable elements */
+body.no-scroll{overflow:hidden !important;height:100vh}
