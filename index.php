@@ -914,8 +914,8 @@
                     <input name="paid_at" class="atl-booking-input" type="date" required />
                   </label>
                   <label class="atl-caption">
-                    INVOICE REFERENCE
-                    <input name="invoice_reference" class="atl-booking-input" placeholder="e.g. INV-1043" />
+                    INVOICE NUMBER
+                    <input name="invoice_reference" class="atl-booking-input" placeholder="Generated automatically" readonly />
                   </label>
                   <label class="atl-caption">
                     NOTES
@@ -1526,7 +1526,6 @@
           var activeMethodBtn = document.querySelector('#payment-method-chips .atl-booking-tab.is-active');
           var method = activeMethodBtn ? activeMethodBtn.dataset.value : 'Card';
           var paidAt = paymentForm.elements['paid_at'].value;
-          var invoiceRef = paymentForm.elements['invoice_reference'].value.trim();
           var note = paymentForm.elements['note'].value.trim();
 
           var submitBtn = paymentForm.querySelector('button[type="submit"]');
@@ -1535,23 +1534,25 @@
             amount: amount,
             method: method,
             paid_at: paidAt,
-            invoice_reference: invoiceRef,
             note: note,
             status: 'Paid'
-          }, submitBtn, function () {
+          }, submitBtn, function (json) {
+            var invoiceRef = json.invoice_reference || '';
             var initials = clientName.split(' ').map(function(x){return x[0]||'';}).join('').slice(0,2).toUpperCase();
             var row = document.createElement('div');
             row.className = 'atl-appt payment-row';
             row.dataset.status = 'Paid';
             row.style.borderTop = '1px solid var(--atl-hairline)';
             row.innerHTML = '<div class="atl-avatar-sm">' + initials + '</div>' +
-                            '<div style="flex:1"><strong>' + clientName + '</strong><div class="atl-caption">' + (note || 'Studio payment') + ' · ' + (invoiceRef || 'INV') + '</div></div>' +
+                            '<div style="flex:1"><strong>' + clientName + '</strong><div class="atl-caption">' + (note || 'Studio payment') + ' · ' + invoiceRef + '</div></div>' +
                             '<span class="atl-badge">' + method + '</span>' +
                             '<div class="atl-appt-time" style="text-align:right">UGX ' + amount.toLocaleString() + '</div>' +
-                            '<span class="atl-badge is-confirmed">Paid</span>';
+                            '<a class="atl-badge is-confirmed" href="receipt.php?id=' + json.id + '" target="_blank" rel="noopener">Receipt</a>';
             var pList = document.getElementById('payment-list');
             if (pList) pList.prepend(row);
             paymentForm.reset();
+            paymentForm.elements['invoice_reference'].value = invoiceRef;
+            showFeedback('Payment recorded as ' + invoiceRef, 'success');
           });
         });
       }
