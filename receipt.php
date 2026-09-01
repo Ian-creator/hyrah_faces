@@ -16,7 +16,11 @@ if(!$row){
     echo 'Receipt not found'; exit;
 }
 
+$invoice = trim((string)($row['invoice_reference'] ?? ''));
+if($invoice === '') $invoice = invoice_reference_for($row['id']);
+
 $html = "<h2>Hyrah Faces - Receipt</h2>";
+$html .= "<p><strong>Invoice No:</strong> ".htmlspecialchars($invoice)."</p>";
 $html .= "<p><strong>Customer:</strong> ".htmlspecialchars($row['name'])."</p>";
 $html .= "<p><strong>Phone:</strong> ".htmlspecialchars($row['phone'])."</p>";
 $html .= "<p><strong>Amount:</strong> ".number_format($row['amount'],2)."</p>";
@@ -30,7 +34,7 @@ if(file_exists(__DIR__.'/vendor/autoload.php')){
     $dompdf->loadHtml('<html><head><meta charset="utf-8"><style>body{font-family:Arial;padding:20px}</style></head><body>'.$html.'</body></html>');
     $dompdf->setPaper('A4','portrait');
     $dompdf->render();
-    $dompdf->stream('receipt_'.$id.'.pdf');
+    $dompdf->stream('receipt_'.$invoice.'.pdf');
     exit;
 }
 
