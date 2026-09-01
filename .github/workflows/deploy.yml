@@ -28,3 +28,5 @@ jobs:
             **/.git*/**
             **/node_modules/**
             .env
+            config.php
+            data/**
