@@ -21,6 +21,12 @@ function get_db(){
 }
 }
 
+if(!function_exists('invoice_reference_for')){
+function invoice_reference_for($paymentId){
+    return 'INV-' . str_pad((string)(int)$paymentId, 4, '0', STR_PAD_LEFT);
+}
+}
+
 if(!function_exists('now')){
 function now(){
     return (new DateTime())->format('Y-m-d H:i:s');
